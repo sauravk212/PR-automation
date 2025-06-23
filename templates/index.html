@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PR Creation Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>In development phase</h1>
+            <nav class="navigation">
+                <a href="{{ url_for('settings') }}" class="nav-link">Configure Settings</a>
+            </nav>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <div class="workspace-members">
+                <h2>Select Reviewers</h2>
+                <div class="members-grid">
+                    {% for member in workspace_members %}
+                    <div class="member-card">
+                        <input type="checkbox" 
+                               id="member-{{ member.uuid }}" 
+                               class="reviewer-checkbox" 
+                               value="{{ member.uuid }}"
+                               data-name="{{ member.display_name }}">
+                        <label for="member-{{ member.uuid }}" class="member-label">
+                            {{ member.display_name }}
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <form id="prForm" method="POST" action="{{ url_for('create_pr') }}">
+                <div class="form-group">
+                    <label for="input_text">Enter your PR description:</label>
+                    <textarea 
+                        id="input_text" 
+                        name="input_text" 
+                        rows="6" 
+                        placeholder="Describe your changes and requirements for the PR..."
+                        required></textarea>
+                </div>
+                <div id="selected-reviewers" class="selected-reviewers">
+                    <p>Selected Reviewers: <span id="reviewer-names">None</span></p>
+                </div>
+                <button type="submit" class="submit-btn">Create Pull Request</button>
+            </form>
+            <div id="loading" class="loading-spinner" style="display: none;">
+                <div class="spinner"></div>
+                <p>Creating your PR...</p>
+            </div>
+            <div id="result" class="result-container"></div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

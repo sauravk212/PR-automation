@@ -1,0 +1,8 @@
+requests
+dotenv
+flask
+llama-index
+python-dotenv
+openai
+pymongo
+certifi

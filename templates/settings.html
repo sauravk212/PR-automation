@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PR Creation Assistant - Settings</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Bitbucket Settings</h1>
+            <nav class="navigation">
+                <a href="{{ url_for('index') }}" class="nav-link">Back to PR Creation</a>
+            </nav>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form id="settingsForm" method="POST" action="{{ url_for('save_settings') }}" class="settings-form">
+                <div class="form-group">
+                    <label for="username">Bitbucket Username:</label>
+                    <input type="text" 
+                           id="username" 
+                           name="username" 
+                           value="{{ settings.get('BITBUCKET_USERNAME', '') }}"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label for="access_token">Bitbucket App Password:</label>
+                    <input type="password" 
+                           id="access_token" 
+                           name="access_token" 
+                           value="{{ settings.get('BITBUCKET_APP_PASSWORD', '') }}"
+                           required>
+                    <small class="help-text">Generate this from your Bitbucket Repository settings → Security → Access Tokens</small>
+                </div>
+                <div class="form-group">
+                    <label for="workspace">Workspace:</label>
+                    <input type="text" 
+                           id="workspace" 
+                           name="workspace" 
+                           value="{{ settings.get('WORKSPACE', '') }}"
+                           required>
+                    <small class="help-text">Your Bitbucket workspace name</small>
+                </div>
+                <div class="form-group">
+                    <label for="repo_slug">Repository Slug:</label>
+                    <input type="text" 
+                           id="repo_slug" 
+                           name="repo_slug" 
+                           value="{{ settings.get('REPO_SLUG', '') }}"
+                           required>
+                    <small class="help-text">The repository name as it appears in the URL</small>
+                </div>
+                <button type="submit" class="submit-btn">Save Settings</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html> 
