@@ -108,4 +108,22 @@ function initializeFormSubmission() {
 document.addEventListener('DOMContentLoaded', () => {
     initializeReviewerSelection();
     initializeFormSubmission();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const settingsForm = document.getElementById('settingsForm');
+    const saveButton = document.getElementById('saveSettingsBtn');
+    const buttonText = saveButton.querySelector('.button-text');
+    const loader = saveButton.querySelector('.loader');
+
+    if (settingsForm) {
+        settingsForm.addEventListener('submit', function(e) {
+            // Disable the button and show loader
+            saveButton.disabled = true;
+            loader.style.display = 'inline-block';
+
+            // The form will submit normally, and the page will refresh when complete
+            // If you want to handle the submission with AJAX instead, you can add that logic here
+        });
+    }
 }); 

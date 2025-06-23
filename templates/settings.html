@@ -56,9 +56,13 @@
                            required>
                     <small class="help-text">The repository name as it appears in the URL</small>
                 </div>
-                <button type="submit" class="submit-btn">Save Settings</button>
+                <button type="submit" id="saveSettingsBtn" class="submit-btn">
+                    <span class="button-text">Save Settings</span>
+                    <div class="loader" style="display: none;"></div>
+                </button>
             </form>
         </div>
     </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html> 
